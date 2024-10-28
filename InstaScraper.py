@@ -16,7 +16,8 @@ In the dictionary, the hashtags are omitted, so the keys are preceded by F or f 
 
 
 """
-
+FOLLOWER = "#F"
+FOLLOWING = "#f"
 
 #CLASS DEFINITIONS
 class Account:
@@ -117,7 +118,7 @@ def initialize_dictionary(file_name):
 # data_type is F for follower list or f for following list.
 def overwrite_save_file_line(file_name: str, data_set: set, account_name: str, data_type: str):
     #add to the index, line 0
-    write_to_line(file_name, 0, '#' + data_type + str(account_name))
+    write_to_line(file_name, 0, data_type + str(account_name))
     #append the new line
     with open(file_name, "a") as file:
         file.write("\n")
@@ -188,6 +189,6 @@ time.sleep(15)"""
 
 testSet = {"kid","named","finger","jijijija"}
 #test writing to a save file
-overwrite_save_file_line(open_or_create_save_file("test_save"), testSet, "test7", "f")
+overwrite_save_file_line(open_or_create_save_file("test_save"), testSet, "test7", FOLLOWING)
 print(initialize_dictionary(open_or_create_save_file("test_save")))
 
