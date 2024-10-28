@@ -1,5 +1,5 @@
 ## InstaScraper
-InstaScraper is a tool that allows you to track changes in your followers' activities on Instagram. By logging into your account, it pulls data on who your followers follow and compares it to previous data to identify any changes. Stay informed about your network's activity effortlessly with InstaScraper!
+InstaScraper is a tool that allows you to track changes in your followers' activities on Instagram. By logging into your account, it pulls data on who your followers follow and compares it to previous data to identify any changes. Stay informed about your network's activity effortlessly with InstaScraper! Note- InstaScraper is currently incomplete.
 
 ## Features
 Follower Tracking: Monitor the list of people your followers follow.
@@ -12,7 +12,7 @@ Instagram account credentials (for logging in)
 Usage
 Run the app:
 
-python instaScraper.py
+python InstaScraper.py
 Log in with your Instagram credentials when prompted. (Make sure you comply with Instagram's policies when using this app.)
 
 The app will fetch and store your followers' following data for analysis.
