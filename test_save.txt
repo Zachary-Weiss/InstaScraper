@@ -1,0 +1,3 @@
+#ftest7#ftest7
+named,jijijija,kid,finger,
+jijijija,named,kid,finger,
