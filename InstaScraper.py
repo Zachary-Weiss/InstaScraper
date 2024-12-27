@@ -113,26 +113,23 @@ def initialize_dictionary(file_name):
         return dictionary
 
 #writes a new list of followers/following
-#data_set is a set of Accounts. this is for sets that weren't previously tracked. 'o' overwrites an
-# existing line, so this is for overwriting sets that have changed since the last time they were written, updating them. 
+#data_set is a set of Accounts. this is for sets that weren't previously tracked.  
 # data_type is F for follower list or f for following list.
-def overwrite_save_file_line(file_name: str, data_set: set, account_name: str, data_type: str):
+def write_to_save_file(file_name: str, data_set: set, account_name: str, data_type: str):
     #add to the index, line 0
     write_to_line(file_name, 0, data_type + str(account_name))
     #append the new line
     with open(file_name, "a") as file:
         file.write("\n")
-        c = 1
         for acc in data_set:
             file.write(acc)
             #separate each account with a comma. there should be a comma at the end, too
             file.write(',')
 
 #overwrites an existing line, so this is for overwriting sets that have changed since the last time they were written, updating them.
-def write_to_save_file(file_name: str, data_set: set, line_to_overwrite: int):
+def overwrite_save_file_line(file_name: str, data_set: set, line_to_overwrite: int):
     with open(file_name, "a") as file:
         line = ""
-        c = 1
         for acc in data_set:
             line += acc
             #separate each account with a comma
@@ -144,12 +141,38 @@ def write_to_save_file(file_name: str, data_set: set, line_to_overwrite: int):
 #def write_to_save_file(file_name: str, data_set: set, account_name: str, data_type: str):
     #want a method to return the line of info given the account name and data type. Should the save file be a class?
 
+#returns the line of the save file that contains the follower or following lists of the account.
+#I should probably have error handling for if an account isn't found
+def getLineOfAccount(file_name:str, account_name: str, data_type: str):
+    with open(file_name, "r") as file:
+        indexLst = indexline_to_list(file_name)
+        targetStr = account_name
+        if data_type == FOLLOWER:
+            targetStr = "F" + targetStr
+        else:
+            targetStr = "f" + targetStr
+        try:
+            #increment by 1 because the account lists start on the second line. The first is the index line.
+            return indexLst.index(targetStr) + 1
+        #return -1 if the target isn't found
+        except:
+            return -1
+        
+#returns a list of Strings, where the first char of the string is either 'F' or 'f' depending on if it's
+# a follower or following list
+def indexline_to_list(file_name):
+    with open(file_name, "r") as file:
+        #ignore the first char because it's a '#', which makes split() add an empty string to the list.
+        # Also, remove the new line at the end
+        index = file.readline()[2:].replace('\n', "").split("#")
+        return index
+        
 
-#compares 2 sets. returns a list containing 2 sets. the first set is the items missing from the new set, and the second is the items missing from the old set.
+#compares 2 sets. returns a tuple containing 2 sets. the first set is the items missing from the new set, and the second is the items missing from the old set.
 def compare_set(old_set: set, new_set: set):
     missing_items = old_set.difference(new_set)
     new_items = new_set.difference(old_set)
-    return [missing_items, new_items]
+    return (missing_items, new_items)
     
             
             
@@ -189,6 +212,8 @@ time.sleep(15)"""
 
 testSet = {"kid","named","finger","jijijija"}
 #test writing to a save file
-overwrite_save_file_line(open_or_create_save_file("test_save"), testSet, "test7", FOLLOWING)
+write_to_save_file(open_or_create_save_file("test_save"), testSet, "test7", FOLLOWING)
 print(initialize_dictionary(open_or_create_save_file("test_save")))
+getLineOfAccount(open_or_create_save_file("test_save"), "mustybust", FOLLOWING)
+
 
